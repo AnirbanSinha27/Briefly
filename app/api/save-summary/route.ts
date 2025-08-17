@@ -28,6 +28,17 @@ export async function POST(request: NextRequest) {
     */
 
     const client = await clientPromise
+    
+    // Check if client is null (MongoDB not configured)
+    if (!client) {
+      console.log("MongoDB not configured, skipping database save")
+      return NextResponse.json({
+        success: true,
+        id: "no-db-" + Date.now(),
+        message: "Summary processed (database not configured)",
+      })
+    }
+    
     const db = client.db("briefly")
     const collection = db.collection("summaries")
 

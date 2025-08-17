@@ -10,6 +10,10 @@ if (!process.env.MONGODB_URI) {
   console.warn("MongoDB URI not found. Database features will be disabled.")
   // Create a mock client promise that resolves to null
   clientPromise = Promise.resolve(null as unknown as MongoClient)
+} else if (process.env.MONGODB_URI.trim() === "") {
+  console.warn("MongoDB URI is empty. Database features will be disabled.")
+  // Create a mock client promise that resolves to null
+  clientPromise = Promise.resolve(null as unknown as MongoClient)
 } else {
   if (process.env.NODE_ENV === "development") {
     // In development mode, use a global variable so that the value
